@@ -1,0 +1,792 @@
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    
+    
+     <meta http-equiv="Content-Security-Policy" content="
+                            default-src * data: blob: ws: wss: gap://ready file://*;
+                            style-src * 'unsafe-inline'; 
+                            script-src * 'unsafe-inline' 'unsafe-eval';
+                            connect-src * ws: wss:;">
+   
+   
+    <title>uClockIn</title>
+    
+    
+	 <link href="css/awesomplete.css" rel="stylesheet"/>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet"/>
+    
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/responsive.css" rel="stylesheet"/>
+    
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="themes/ej.mobile.all.min.css" />
+
+    
+    <!--Sample StyleSheet-->
+    <link rel="stylesheet" href="themes/SampleBrowser.css" />
+    <link rel="stylesheet" href="themes/SampleStyle.css" />
+    
+      <script type="text/javascript" src="Scripts/jquery-2.1.4.min.js"></script>
+      
+    <script src="Scripts/ej.mobile.all.min.js"></script>
+     <script src="Scripts/awesomplete.min.js"></script>
+    
+
+   <script type="text/javascript" src="cordova.js"></script>
+   <script type="text/javascript" src="js/settings.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    
+    <script src="Scripts/datajs-1.1.3.min.js"></script>
+    <script src="js/q.js"></script>
+    <script src="jaydata.js"></script>
+    <script src="jaydatamodules/qDeferred.js"></script>
+    
+    
+
+    <style>
+	    label.error{
+           color:red;
+        }
+        .control {
+            height: 500px;
+        }
+
+        .ejinputtext {
+            height: 25px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .row .cols-sample-area {
+            padding: 0px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .acc {
+            font-size: 12px;
+            padding-top: 8px;
+        }
+
+        .top {
+            margin-top: 5px;
+        }
+
+        .reqired {
+            margin: 0 0 3px 0;
+            color: red;
+            display: inline-block;
+        }
+		.ejInputTextCustom{
+	        border-color: black;
+			border-style: solid;
+			border-width: 1px;
+        }
+        .status{
+	        position: absolute;
+	        top:5;
+	        left: 5;
+	        display: none;
+        }
+        .online{
+	        position: absolute;
+	        top:20;
+	        left: 20;
+	        display: none;
+        }
+        .offline{
+	        position: absolute;
+	        top:20;
+	        left: 20;
+	        display: none;
+        }
+        .syncButton{
+	        position: absolute;
+	        top: 5;
+	        right: 5;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        app.initialize();
+        
+        // stuff for ajax loading etc
+        $(document).on({
+		    ajaxStart: function() { $(".status").show();   },
+		     ajaxStop: function() { $(".status").hide(); }    
+		});
+	     
+        document.addEventListener("online", function(){
+	        $(".online").show(); 
+	        $(".offline").hide(); 
+	        getToken(sync);
+	        
+	     }, false);
+	     
+	     document.addEventListener("offline", function(){
+		     $(".online").hide(); 
+	        $(".offline").show(); 
+		     
+	     }, false);
+	     
+    </script>
+    <script>
+	    // for admin dialog
+	     function onDialogClose(args) {
+            $("#adminDialog").hide();
+        }
+        
+	    $(document).ready(function(){
+		    // create the controls
+		    $("#adminDialog").ejmDialog({ 
+				 enableModal: true,
+                    enableResize: true,
+                    width: "491",
+                    actionButton: "onDialogClose",
+                    containment: ".cols-sample-area",
+                    title: "Admin Setup",
+                    actionButtons: []
+			
+			});  
+			
+			 $("#updatePINDialog").ejmDialog({ 
+				 enableModal: true,
+                    enableResize: true,
+                    width: "491",
+                    containment: ".cols-sample-area",
+                    title: "Update PIN"
+			
+			});
+			
+			$("#btnDeviceSetOk").ejmButton();
+			$("#btnPINChangeOk").ejmButton();
+			$("#btnPINChangeCancel").ejmButton();
+			$("#txtClockIn").hide();
+		    $("#txtClockOut").hide();
+			
+			
+			
+		  if(IS_NOT_FIRST_RUN){
+		     doDBStuff();
+		   }
+		   else{
+			          
+			$("#adminDialog").show(); 
+		   }
+	    });
+	    
+     var TAEntities;
+     var BasicTimeAttendanceLog;
+     var BasicTAUser;
+     	
+     	
+     function doDBStuff(){
+        $data.defaults.disableBatch = true;
+        
+        
+        (function (global, $data, undefined) {
+            $data.defaults.disableBatch = true;
+                        registerEdmTypes();
+
+            BasicTimeAttendanceLog = $data.Entity.extend("BasicTimeAttendanceLog", {
+                'Id': { type: "int", key: true, computed: true },
+                'UserId': { type: 'Edm.String', nullable: false, required: true},
+                'Mode': { type: 'Edm.String', nullable: false, required: true},
+                'DeviceId': { type: 'Edm.String', nullable: true},
+                'LogTime': { type: 'Edm.String', nullable: true },
+                'IsCheckIn': { type: 'Edm.Boolean', nullable: false },
+                'Dirty': { type: 'Edm.Boolean', nullable: false }
+            });
+            BasicTAUser = $data.Entity.extend("BasicTAUser", {
+                'Id': { type: "int", key: true, computed: false },
+                'UserName': { type: 'Edm.String', nullable: false, required: true},
+                'UserPIN': { type: 'Edm.String', nullable: false, required: true},
+                'Details': { type: 'Edm.String', nullable: true },
+                'Dirty': { type: 'Edm.Boolean', nullable: false }
+            });
+                TAEntities = $data.EntityContext.extend("TAEntities", {
+                    BasicTimeAttendanceLogs: { type: $data.EntitySet, elementType: BasicTimeAttendanceLog },
+                    BasicTAUsers: { type: $data.EntitySet, elementType: BasicTAUser }
+            });
+
+        })(window, $data);
+
+        $(function () {
+           
+
+            var oProviderConfig = {
+                name: 'webApi',
+                apiUrl: API_LOCATION+'/stdapi',
+                disableBatch :true
+            };
+            //initialize the Northwind context from the static data model generated by JaySvcUtil.exe
+            window['TADB'] = new TAEntities(oProviderConfig);
+            window['TADBLocal'] = new TAEntities({ name: "sqLite", databaseName: "LocalDB" });
+            
+            setTimeout(function(){
+	            reloadUsersLocal();
+	            // Lets refresh our token if we have connection
+	            getToken(sync);
+            }, 2000);
+            
+            
+            // Hide the Buttons 
+		$("#txtClockIn").hide();
+		$("#txtClockOut").hide();
+
+        });
+	}
+
+
+		
+		function userChanged(x){
+			// Check USer name and see if we should display a check in or out
+			var username = x.textContent; 
+			$("#username").val(username); // set username
+			var _isClockin = localStorage.getItem(username);
+			
+			$("#txtClockIn").hide();
+			$("#txtClockOut").hide();
+		
+			if(_isClockin == "true"){
+				$("#txtClockOut").show();
+			}
+			else{
+				$("#txtClockIn").show();
+			}
+			awesomeCompleteInstance.close();
+		}
+		
+		
+		
+		function createClockRecord(isClockIn){
+			// Also create a local record that tells if the user is clocked in or out
+			var _username = $("#username").val();
+			var _password = $("#password").val();
+			
+			doAuthAction(_username,_password,
+			
+			function(){
+				// Set state for button tracking
+				localStorage.setItem(_username, isClockIn);
+				
+				// create log
+				
+				var date = new Date().toUTCString();
+	            var _log = new BasicTimeAttendanceLog({UserId: _username, Mode: DEVICE_MODE, DeviceId: DEVICE_ID, IsCheckIn: isClockIn, LogTime: date,Dirty:"true" });
+	            TADBLocal.BasicTimeAttendanceLogs.add(_log);
+	            TADBLocal.BasicTimeAttendanceLogs.saveChanges();
+				
+				alert("Time successfully Recorded!");
+				
+				getToken(syncLogs);
+				
+				// reset UI
+				$("#username").val("");
+				$("#password").val("");
+				$("#txtClockIn").hide();
+				$("#txtClockOut").hide();
+
+			});
+		}
+		
+		function doAuthAction(userName,password,callback){
+			TADBLocal.BasicTAUsers.filter("it.UserName == uN",{uN:userName})
+			.toArray(
+				function(users){
+					// if username and pass match
+					if(password== users[0].UserPIN){
+						callback();
+					}
+					else{
+						alert("Incorrect PIN! Please ensure your PIN is correct for User selected");
+				}
+				
+			});
+		}
+		
+		var awesomeCompleteInstance;
+	
+		function updateUsersList(dataList){
+			
+			var input = document.getElementById("username");
+			
+			//for now we only need the usernames as that will be used like the ID as well
+			// get lis from the array of objects
+			// Show label but insert value into the input:
+			var names = dataList.map(function(item) {
+			  return item['UserName'];
+			});
+			
+			if(awesomeCompleteInstance) awesomeCompleteInstance.destroy();
+			awesomeCompleteInstance = new Awesomplete(input, {
+				list: names
+			});
+			awesomeCompleteInstance.select = userChanged;
+			
+			
+			/// This Dropdown does not seem to be working properly. Need to see what is hampering that
+/*
+			 $("#username").ejmDropDownList({
+                    dataSource:  dataList,
+                    fields: { text: "UserName", id: "Id", value: "Id", image:"/img/workerProfile.png" },
+                    change: userChanged,
+                    enableAnimation: true 
+                    
+                });
+*/
+		}
+	
+		
+		
+		function sync(){
+			syncUsers();
+			syncLogs();
+			
+			     
+	       // Send all data over to server if requested for diagnostics
+	       
+	       // sync to get check in button state for user
+	       
+	       // Sync Configuration data and clear if requested
+                       
+		}
+		
+		function syncLogs(){
+			 // we'll only try to sync if API is available
+            $.ajax(API_LOCATION, {
+                   statusCode: {
+                   404: function() {
+                       //alert('Not working');
+                   },
+                   200: function() {
+                       TADBLocal.BasicTimeAttendanceLogs
+                       .filter("it.Dirty == true")
+                       .toArray(function (items) {
+                                recSync(items,0);
+                                });
+                            }
+                        }
+                    });
+
+		}
+		
+        function syncUsers() {
+            // we'll only try to sync if API is available
+            $.ajax(API_LOCATION, {
+                   statusCode: {
+                   404: function() {
+                       //alert('Not working');
+                   },
+                   200: function() {                
+                       // Sync Users
+                       resetUsers();
+                       reloadUsers();
+                       
+                   }
+                }
+            });
+        }
+
+        function recSync(items, i) {
+            if (i < items.length) {
+                TADB.add(items[i]);
+                TADB.saveChanges(function () {
+                    TADBLocal.attachOrGet(items[i]);
+                    items[i].Dirty = false;
+                    TADBLocal.saveChanges(recSync(items, i + 1));
+                });
+            }
+        }
+    
+        // Loads the new Users from the remote DB
+        function reloadUsers(){
+            var _users = TADB.BasicTAUsers.toArray(function(dataList){
+		       // Use the Q library to make calls syncranous
+             Q.fcall(function(){
+                     TADBLocal.addMany(dataList);
+                     }).then(function(){
+                             TADBLocal.saveChanges(reloadUsersLocal);
+                             });
+                    });
+        }
+        
+        function reloadUsersLocal(){
+	        var _users = TADBLocal.BasicTAUsers.toArray(updateUsersList);
+        }
+        
+        // Clears the local DB of T and A Users
+         function resetUsers() {
+            TADBLocal.BasicTAUsers.forEach(function (item) { 
+	            TADBLocal.BasicTAUsers.remove(item); 
+	            TADBLocal.saveChanges();
+	            });
+        }
+        function closeSetup(){
+	        $("#adminDialog").hide();
+	        
+	        
+	        // set the data 
+	        localStorage.setItem("device_id", $("#txtDeviceId").val());
+	        localStorage.setItem("api_location", $("#txtAPILoc").val());
+        }
+// Get the autorization token for making requests
+function getToken(callback, errorCb) {
+	
+    var url = API_LOCATION+"/token";
+    var uname = API_USER;
+    var pass = API_PASSWORD;
+    
+    $.ajax({
+            url: url,
+            data: "grant_type=password&username="+uname+"&password="+pass,
+            type: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded", "Cache-Control": "no-cache", "If-Modified-Since": "Mon, 27 Mar 1972 00:00:00 GMT" },
+            dataType: "json",
+            success:function (result) {
+               localStorage.setItem('access_token', result.access_token); // set local storage
+               // set header for future requests by JayData
+               TADB.prepareRequest = function(cfg){
+                   cfg.headers["Authorization"] = "Bearer "+localStorage.getItem("access_token");
+                   cfg.headers["Content-Type"] = "application/json; charset=utf-8";
+                   cfg.headers["Cache-Control"] = "no-cache";
+                   cfg.headers["If-Modified-Since"] = "Mon, 27 Mar 1972 00:00:00 GMT";
+               };
+                if (callback != null)
+                    callback(result.response, result.status);
+            },
+            error:function (result) {
+                if (errorCb)
+                errorCb(result.status);
+            }
+        }
+    );
+}
+
+	
+	function registerEdmTypes() {
+
+                function Edm_Boolean() { };
+                $data.Container.registerType('Edm.Boolean', Edm_Boolean);
+                $data.Container.mapType(Edm_Boolean, $data.Boolean);
+
+                function Edm_Binary() { };
+                $data.Container.registerType('Edm.Binary', Edm_Binary);
+                $data.Container.mapType(Edm_Binary, $data.Blob);
+
+                function Edm_DateTime() { };
+                $data.Container.registerType('Edm.DateTime', Edm_DateTime);
+                $data.Container.mapType(Edm_DateTime, $data.Date);
+
+                function Edm_DateTimeOffset() { };
+                $data.Container.registerType('Edm.DateTimeOffset', Edm_DateTimeOffset);
+                $data.Container.mapType(Edm_DateTimeOffset, $data.Integer);
+
+                function Edm_Time() { };
+                $data.Container.registerType('Edm.Time', Edm_Time);
+                $data.Container.mapType(Edm_Time, $data.Integer);
+
+                function Edm_Decimal() { };
+                $data.Container.registerType('Edm.Decimal', Edm_Decimal);
+                $data.Container.mapType(Edm_Decimal, $data.Number);
+
+                function Edm_Single() { };
+                $data.Container.registerType('Edm.Single', Edm_Single);
+                $data.Container.mapType(Edm_Single, $data.Number);
+
+                function Edm_Double() { };
+                $data.Container.registerType('Edm.Double', Edm_Double);
+                $data.Container.mapType(Edm_Double, $data.Number);
+
+                function Edm_Guid() { };
+                $data.Container.registerType('Edm.Guid', Edm_Guid);
+                $data.Container.mapType(Edm_Guid, $data.String);
+
+                function Edm_Int16() { };
+                $data.Container.registerType('Edm.Int16', Edm_Int16);
+                $data.Container.mapType(Edm_Int16, $data.Integer);
+
+                function Edm_Int32() { };
+                $data.Container.registerType('Edm.Int32', Edm_Int32);
+                $data.Container.mapType(Edm_Int32, $data.Integer);
+
+                function Edm_Int64() { };
+                $data.Container.registerType('Edm.Int64', Edm_Int64);
+                $data.Container.mapType(Edm_Int64, $data.Integer);
+
+                function Edm_Byte() { };
+                $data.Container.registerType('Edm.Byte', Edm_Byte);
+                $data.Container.mapType(Edm_Byte, $data.Integer);
+
+                function Edm_String() { };
+                $data.Container.registerType('Edm.String', Edm_String);
+                $data.Container.mapType(Edm_String, $data.String);
+
+            };
+            
+            
+        function renderLogs(dataList) {
+            var table = $('#categoryTable tbody');
+            table.empty();
+            dataList.forEach(function (item) {
+                table.append('<tr><td><a onClick="loadProduct(' + item.Id + ')">' +
+                    item.Id + '</a></td><td>' + item.UserId + '</td></tr>');
+            });
+        }
+        
+        function renderUsers(dataList) {
+            var table = $('#userTable tbody');
+            table.empty();
+            dataList.forEach(function (item) {
+                table.append('<tr><td><a onClick="loadProduct(' + item.UserName + ')">' +
+                    item.UserName + '</a></td><td>' + item.Id + '</td></tr>');
+            });
+        }
+        
+
+        function testSaveLocal() {
+			var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var _log = new BasicTimeAttendanceLog({UserId: "2", Mode: "1", DeviceId: "1", LogTime: date,Dirty:"true" });
+            TADBLocal.BasicTimeAttendanceLogs.add(_log);
+            TADBLocal.BasicTimeAttendanceLogs.saveChanges();
+        }
+
+        function clearTimeLogs() {
+            TADBLocal.BasicTimeAttendanceLogs.forEach(function (item) { TADBLocal.BasicTimeAttendanceLogs.remove(item); });
+            TADBLocal.saveChanges();
+
+        }
+        
+        function showUpdateUserPIN(){
+	        // we only show this if the pin is correct for the user, else show error
+	        // Also create a local record that tells if the user is clocked in or out
+			var _username = $("#username").val();
+			var _password = $("#password").val();
+			
+			doAuthAction(_username,_password,
+			
+			function(){
+				$("#updatePINDialog").show(); 
+			});
+
+        }
+        
+        function updateUserPIN(){
+	        // This needs to throw error if they are not connected server
+	         // we'll only try to sync if API is available
+            $.ajax(API_LOCATION, {
+                   statusCode: {
+                   404: function() {
+                       alert('Connection to server lost. Please ensure you are connected to the Internet');
+                   },
+                   200: function() {
+	                   // this will make a call and on success start the sync process to update local
+	                   var _username = $("#username").val();
+	                   var _newPIN = $("#txtNewPIN").val();
+	                   var _repeatPIN = $("#txtPINRepeat").val();
+	                   
+	                   if(_newPIN != _repeatPIN){
+		                   alert("Please ensure PIN is entered correctly in both text boxes");
+	                   }
+	                   else
+	                   {
+		                   // set the new PIN on server DB and resync users locally
+	                       TADB.BasicTAUsers.filter("it.UserName == uN",{uN:_username})
+							.toArray(
+								function(users){
+									// Filter above does not seem to work as expected. May need the web API to support it
+									// seems like its using the method to get all the users
+									// loop and find the one we want
+									var user;
+									for (var i = 0, len = users.length; i < len; i++) {
+								        if (users[i].UserName === _username)
+								            user = users[i]; // Return as soon as the object is found
+								            continue;
+								    }
+									
+									// set the pin
+									TADB.attachOrGet(user);
+									user.UserPIN = _newPIN;
+									TADB.saveChanges(function(){
+										sync();
+										$("#updatePINDialog").hide(); 
+										alert("PIN Updated");
+										
+										// clear dialog
+										$("#txtNewPIN").val("");
+										$("#txtPINRepeat").val("");
+									});
+								
+								
+							});
+						}
+                            }
+                        }
+                    });
+        }
+    </script>
+
+</head>
+
+<body>
+    <table id="categoryTable" class="table span3 reset-m" style="display:none; margin: 0 10px 10px 0 !important;">
+        <thead>
+            <tr>
+                <th>Category name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    
+    <table id="userTable" class="table span3 reset-m" style="display:none; margin: 0 10px 10px 0 !important;">
+        <thead>
+            <tr>
+                <th>User name</th>
+                <th>PIN</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+    <div id="loginPageCtrl" >
+					<div class="MainWrapper">
+				<div class="SplashWrapper">
+					<div class="outerLogin">
+						<div id="SpLogoLogin">
+							<div class="innerLogin">
+								<img src="img/sp_logo.png" />
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					
+					<div class="LoginFromWrapper">
+						<h2>Connect Clock In</h2>
+						<div class="LoginFrom">
+							
+							<label for="username"> Employee:
+								<div style="width: 100%;" class="ForIpad">
+									<i class="icon ion-android-person placeholder-icon CustomIconCss"></i>
+									<input type="text" id="username" awesomplete-selectcomplete = "userChanged"/>
+								</div> </label>
+								
+							<label for="password"> PIN:
+								<div style="width: 100%;" class="ForIpad">
+									<i class="icon ion-ios-locked placeholder-icon CustomIconCss"></i>
+									<input  type="number" id="password" data-ej-watermarktext="Enter Your PIN"/>
+								</div> </label>
+							<div class="clear"></div>
+							<div id= "txtClockIn" class="LoginButton">
+								<span onClick="createClockRecord(true);" > Check In </span>
+							</div>
+							<div id= "txtClockOut" class="LoginButton">
+								<span onClick="createClockRecord(false);" > Check Out </span>
+							</div>
+							<div class="clear"></div><br/>
+							<div id= "txtUpdatePIN" class="LoginButton">
+								<span onClick="showUpdateUserPIN();" > Update PIN </span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- Dialogs -->
+				
+				<div id="adminDialog" title="App Setup">
+					   <form id="form1">
+                          <table>
+                            <tr>
+                                <td>
+                                    <p class="top">This window is only displayed at first run. All settings are modified within the Connect ERP application after. If you need to change 
+					  these settings for the device later, please delete this app and reinstall.
+				  </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Device ID<p class="reqired">*</p>
+                                    <input type="text" id="txtDeviceId" name="txtDeviceId" class="ejInputTextCustom" style="border: black solid 1px" required /><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    API Location <p class="reqired">*</p>
+                                    <input type="text" id="txtAPILoc" name="txtAPILoc" class="ejInputTextCustom" style="border: black solid 1px" required />
+                                </td>
+                            </tr>
+                            
+                             <tr>
+                                <td>
+	                                <button onclick="closeSetup()" id="btnDeviceSetOk">Ok</button> 
+                                </td>
+                            </tr>
+                           
+                           
+                        </table>
+						</form>
+                    </div>
+                    
+                    <div id="updatePINDialog" title="Update PIN">
+					   <form id="form1">
+                          <table>
+                            <tr>
+                                <td>
+                                    <p class="top">Please enter your new PIN
+				  </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    New PIN<p class="reqired">*</p>
+                                    <input type="text" id="txtNewPIN" name="txtNewPIN" class="ejInputTextCustom" style="border: black solid 1px" required /><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Confirm New PIN <p class="reqired">*</p>
+                                    <input type="text" id="txtPINRepeat" name="txtPINRepeat" class="ejInputTextCustom" style="border: black solid 1px" required />
+                                </td>
+                            </tr>
+                            
+                             <tr>
+                                <td>
+	                                <br/>
+                                    <input onclick="updateUserPIN()" type="button" id="btnPINChangeOk" name="btnOk" class="" value="Ok" />
+                                    <input onclick="$('#updatePINDialog').hide();" type="button" id="btnPINChangeCancel" name="btnPINChangeCancel" class="" value="Cancel" />
+                                </td>
+                            </tr>
+                            
+                           
+                        </table>
+						</form>
+                    </div>
+                    
+                    <div class="status">
+	                    Communicating...
+                    </div>
+                    <div class="online">
+	                    Online
+                    </div>
+                    <div class="offline">
+	                    Offline
+                    </div>
+                    <div class="LoginButton syncButton">
+						<p onClick="getToken(sync);" > Force Sync </p>
+					</div>
+</body>
+
+</html>
+

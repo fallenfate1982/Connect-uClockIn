@@ -1,0 +1,799 @@
+@media screen and (max-height: 1024px) {
+    .SplashWrapper {
+        height: 1024px;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 38px;
+    }
+    .LoginFrom label {
+        font-size: 30px;
+        margin-bottom: 40px;
+    }
+    #MenuList .item {
+        font-size: 24px;
+    }
+    .TitleMain p {
+        font-size: 32px;
+    }
+    .TitleMain span {
+        font-size: 24px;
+    }
+    .TodayTimeline {
+        font-size: 24px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 30px;
+    }
+    .ForIpad {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+    }
+    .TimeLineL {
+        float: left;
+        margin-left: 7px !important;
+    }
+    .CustomCheckmark {
+    position: absolute;
+    right: 12%;
+}
+.DetailsButtons {
+    width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+}
+}
+@media screen and (max-height: 736px) {
+    .CustomCheckmark {
+    position: absolute;
+    right: 10%;
+}
+    .outerLogin {
+        height: 48%;
+    }
+    .TimeLineL {
+        float: left;
+        margin-left: 15px !important;
+    }
+    .SplashWrapper {
+        height: 736px !important;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+    .LoginFrom {
+        width: 85%;
+        margin-top: 5px;
+    }
+    .LoginFrom label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .LoginFrom input {
+        width: 100%;
+    }
+    .CustomIconCss {
+        left: 16px;
+        top: 0;
+    }
+    .LoginButton {
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .TitleMain p {
+        font-size: 26px;
+    }
+    .TitleMain span {
+        font-size: 20px;
+    }
+    .MenuLogo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .UserName {
+        padding-bottom: 5px;
+        font-size: 24px;
+    }
+    .JobsListTimeline {
+        width: 90%;
+    }
+    .TodayTimeline {
+        font-size: 18px;
+    }
+    .TimelineMain {
+        left: 17px;
+    }
+    timeline[side="left"] ul.timeline li timeline-badge {
+        left: 41px;
+        border: 1px solid black;
+    }
+    timeline .timeline timeline-event li timeline-badge {
+        width: 20px;
+        height: 20px;
+    }
+    .TimelineBadge {
+        margin-left: -10px;
+        line-height: 3.7;
+    }
+    .NextDate {
+        margin-left: -20px;
+        font-size: 14px;
+    }
+    timeline .timeline timeline-event li timeline-panel {
+        border: 1px solid #000;
+        border-radius: 10px;
+        right: 15px;
+    }
+    .ContentP {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .editIconM {
+        font-size: 18px;
+    }
+    .TitleMainD p {
+        font-size: 22px;
+        margin-bottom: 0;
+    }
+    .DetailMain ul li {
+        font-size: 16px;
+        padding-bottom: 42px;
+        line-height: 40px;
+    }
+    .DetailViewL {
+        width: 50%;
+    }
+    .DetailViewR {
+        width: 45%;
+    }
+    .DetailsForm span {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm input {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm textarea {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .SaveBtn {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .BacktoList {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 18px;
+    }
+    .DetailsButtons {
+        width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+    }
+    .JobsListTimeline label {
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        width: 100%;
+        float: left;
+        display: block;
+        overflow: inherit;
+    }
+    .ForIpad {
+        position: inherit;
+    }
+}
+@media screen and (max-height: 667px) {
+    .outerLogin {
+        height: 40%;
+    }
+    .TimeLineL {
+        float: left;
+        margin-left: 15px !important;
+    }
+    .SplashWrapper {
+        height: 667px !important;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+    .LoginFrom {
+        width: 85%;
+        margin-top: 5px;
+    }
+    .LoginFrom label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .LoginFrom input {
+        width: 100%;
+    }
+    .CustomIconCss {
+        left: 16px;
+        top: 0;
+    }
+    .LoginButton {
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .TitleMain p {
+        font-size: 26px;
+    }
+    .TitleMain span {
+        font-size: 20px;
+    }
+    .MenuLogo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .UserName {
+        padding-bottom: 5px;
+        font-size: 24px;
+    }
+    .JobsListTimeline {
+        width: 90%;
+    }
+    .TodayTimeline {
+        font-size: 18px;
+    }
+    .TimelineMain {
+        left: 17px;
+    }
+    timeline[side="left"] ul.timeline li timeline-badge {
+        left: 41px;
+        border: 1px solid black;
+    }
+    timeline .timeline timeline-event li timeline-badge {
+        width: 20px;
+        height: 20px;
+    }
+    .TimelineBadge {
+        margin-left: -10px;
+        line-height: 3.7;
+    }
+    .NextDate {
+        margin-left: -20px;
+        font-size: 14px;
+    }
+    timeline .timeline timeline-event li timeline-panel {
+        border: 1px solid #000;
+        border-radius: 10px;
+        right: 15px;
+    }
+    .ContentP {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .editIconM {
+        font-size: 18px;
+    }
+    .TitleMainD p {
+        font-size: 22px;
+        margin-bottom: 0;
+    }
+    .DetailMain ul li {
+        font-size: 16px;
+        padding-bottom: 42px;
+        line-height: 40px;
+    }
+    .DetailViewL {
+        width: 50%;
+    }
+    .DetailViewR {
+        width: 45%;
+    }
+    .DetailsForm span {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm input {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm textarea {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .SaveBtn {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .BacktoList {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 18px;
+    }
+    .DetailsButtons {
+        width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+    }
+    .JobsListTimeline label {
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        width: 100%;
+        float: left;
+        display: block;
+        overflow: inherit;
+    }
+}
+@media screen and (max-height: 640px) {
+    .outerLogin {
+        height: 32%;
+    }
+    .TimeLineL {
+        float: left;
+        margin-left: 15px !important;
+    }
+    .SplashWrapper {
+        height: 640px !important;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+    .LoginFrom {
+        width: 85%;
+        margin-top: 5px;
+    }
+    .LoginFrom label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .LoginFrom input {
+        width: 100%;
+    }
+    .CustomIconCss {
+        left: 16px;
+        top: 0;
+    }
+    .LoginButton {
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .TitleMain p {
+        font-size: 26px;
+    }
+    .TitleMain span {
+        font-size: 20px;
+    }
+    .MenuLogo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .UserName {
+        padding-bottom: 5px;
+        font-size: 24px;
+    }
+    .JobsListTimeline {
+        width: 90%;
+    }
+    .TodayTimeline {
+        font-size: 18px;
+    }
+    .TimelineMain {
+        left: 17px;
+    }
+    timeline[side="left"] ul.timeline li timeline-badge {
+        left: 41px;
+        border: 1px solid black;
+    }
+    timeline .timeline timeline-event li timeline-badge {
+        width: 20px;
+        height: 20px;
+    }
+    .TimelineBadge {
+        margin-left: -10px;
+        line-height: 3.7;
+    }
+    .NextDate {
+        margin-left: -20px;
+        font-size: 14px;
+    }
+    timeline .timeline timeline-event li timeline-panel {
+        border: 1px solid #000;
+        border-radius: 10px;
+        right: 15px;
+    }
+    .ContentP {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .editIconM {
+        font-size: 18px;
+    }
+    .TitleMainD p {
+        font-size: 22px;
+        margin-bottom: 0;
+    }
+    .DetailMain ul li {
+        font-size: 16px;
+        padding-bottom: 42px;
+        line-height: 40px;
+    }
+    .DetailViewL {
+        width: 50%;
+    }
+    .DetailViewR {
+        width: 45%;
+    }
+    .DetailsForm span {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm input {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm textarea {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .SaveBtn {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .BacktoList {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 18px;
+    }
+    .DetailsButtons {
+        width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+    }
+    .JobsListTimeline label {
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        width: 100%;
+        float: left;
+        display: block;
+        overflow: inherit;
+    }
+}
+@media screen and (max-height: 568px) {
+    .outerLogin {
+        height: 32%;
+    }
+    .TimeLineL {
+        float: left;
+        margin-left: 15px !important;
+    }
+    .SplashWrapper {
+        height: 568px !important;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+    .LoginFrom {
+        width: 85%;
+        margin-top: 5px;
+    }
+    .LoginFrom label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .LoginFrom input {
+        width: 100%;
+    }
+    .CustomIconCss {
+        left: 16px;
+        top: 0;
+    }
+    .LoginButton {
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .TitleMain p {
+        font-size: 26px;
+    }
+    .TitleMain span {
+        font-size: 20px;
+    }
+    .MenuLogo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .UserName {
+        padding-bottom: 5px;
+        font-size: 24px;
+    }
+    .JobsListTimeline {
+        width: 90%;
+    }
+    .TodayTimeline {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    .TimelineMain {
+        left: 17px;
+    }
+    timeline[side="left"] ul.timeline li timeline-badge {
+        left: 41px;
+        border: 1px solid black;
+    }
+    timeline .timeline timeline-event li timeline-badge {
+        width: 20px;
+        height: 20px;
+    }
+    .TimelineBadge {
+        margin-left: -10px;
+        line-height: 3.7;
+    }
+    .NextDate {
+        margin-left: -20px;
+        font-size: 14px;
+    }
+    timeline .timeline timeline-event li timeline-panel {
+        border: 1px solid #000;
+        border-radius: 10px;
+        right: 15px;
+    }
+    .ContentP {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .editIconM {
+        font-size: 18px;
+    }
+    .TitleMainD p {
+        font-size: 22px;
+        margin-bottom: 0;
+    }
+    .DetailMain ul li {
+        font-size: 16px;
+        padding-bottom: 42px;
+        line-height: 40px;
+    }
+    .DetailViewL {
+        width: 50%;
+    }
+    .DetailViewR {
+        width: 45%;
+    }
+    .DetailsForm span {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm input {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm textarea {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .SaveBtn {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .BacktoList {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 18px;
+    }
+    .DetailsButtons {
+        width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+    }
+    .JobsListTimeline label {
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        width: 100%;
+        float: left;
+        display: block;
+        overflow: inherit;
+    }
+
+}
+@media screen and (max-height: 480px) {
+    .TimeLineL {
+        float: left;
+        margin-left: 15px !important;
+    }
+    .SplashWrapper {
+        height: 480px !important;
+    }
+    .LoginFromWrapper h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+    .LoginFrom {
+        width: 85%;
+        margin-top: 5px;
+    }
+    .LoginFrom label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .LoginFrom input {
+        width: 100%;
+    }
+    .CustomIconCss {
+        left: 16px;
+        top: 0;
+    }
+    .LoginButton {
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .TitleMain p {
+        font-size: 26px;
+    }
+    .TitleMain span {
+        font-size: 20px;
+    }
+    .MenuLogo {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .UserName {
+        padding-bottom: 5px;
+        font-size: 24px;
+    }
+    .JobsListTimeline {
+        width: 90%;
+    }
+    .TodayTimeline {
+        font-size: 18px;
+    }
+    .TimelineMain {
+        left: 17px;
+    }
+    timeline[side="left"] ul.timeline li timeline-badge {
+        left: 41px;
+        border: 1px solid black;
+    }
+    timeline .timeline timeline-event li timeline-badge {
+        width: 20px;
+        height: 20px;
+    }
+    .TimelineBadge {
+        margin-left: -10px;
+        line-height: 3.7;
+    }
+    .NextDate {
+        margin-left: -20px;
+        font-size: 14px;
+    }
+    timeline .timeline timeline-event li timeline-panel {
+        border: 1px solid #000;
+        border-radius: 10px;
+        right: 15px;
+    }
+    .ContentP {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .editIconM {
+        font-size: 18px;
+    }
+    .TitleMainD p {
+        font-size: 22px;
+        margin-bottom: 0;
+    }
+    .DetailMain ul li {
+        font-size: 16px;
+        padding-bottom: 42px;
+        line-height: 40px;
+    }
+    .DetailViewL {
+        width: 50%;
+    }
+    .DetailViewR {
+        width: 45%;
+    }
+    .DetailsForm span {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm input {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .DetailsForm textarea {
+        font-size: 16px;
+        float: left;
+        width: 100%;
+    }
+    .SaveBtn {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .BacktoList {
+        width: 45%;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .ion-ios-checkmark-outline, .ion-ios-undo-outline {
+        font-size: 18px;
+    }
+    .DetailsButtons {
+        width: 100%;
+        float: left;
+        margin-bottom: 15px !important;
+        margin-top: 15px;
+    }
+    .JobsListTimeline label {
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        width: 100%;
+        float: left;
+        display: block;
+        overflow: inherit;
+    }
+}
+/*
+@media screen and (max-height: 1280px) {
+    .JobsListTimeline {
+        margin-bottom: 100px;
+    }
+
+}*/
