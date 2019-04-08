@@ -9,4 +9,4 @@ A build for Android was not done as yet. However it should just be a matter of a
 You should be able to open the Xcode project and setup your signing and app id information and then compile the application. 
 
 ## Running the App
-Currently you will need developer access to the Connect ERP system to setup Time and Attendance users and access to the application. Once the Time and Attendance is ported to <a href = 'https://easyaccounts.online/'>Connect Online </a> (SaaS version of Connect ERP) you will be able to setup this for your account directly and run this mobile app against it.
+Currently you will need developer access to the Connect ERP system to setup Time and Attendance users and access to the application. Once the Time and Attendance is ported to <a href = 'https://easyaccounts.online/'>Connect Online </a> (SaaS version of Connect ERP) you will be able to setup this for your account directly and run this mobile app against it. In the meanwhile, you can email the developers at development@auratechtt.com to find out about getting access to the Connect ERP for helping with further updates to this application
